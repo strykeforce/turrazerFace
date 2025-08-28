@@ -487,7 +487,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
               stdMatrix.set(2, 0, VisionConstants.kTrustYawStdDev);
             }
 
-            turretSubsystem.addVisionMeasurement(
+            robotState.addVisionMeasurement(
                 robotPose, result.getTimeStamp() / 1_000_000.0, stdMatrix);
             stdMatrix.set(2, 0, VisionConstants.kIgnoreYawStdDev);
           }
