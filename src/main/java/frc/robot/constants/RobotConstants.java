@@ -20,7 +20,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.ReverseLimitSourceValue;
 import com.ctre.phoenix6.signals.ReverseLimitTypeValue;
 import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.wpilibj.RobotController;
 import org.slf4j.LoggerFactory;
 
 public class RobotConstants {
@@ -90,55 +89,55 @@ public class RobotConstants {
   public static final int kMaxAutoSwitchID = 9;
 
   public RobotConstants() {
-      // Proto constants
-      kElevatorFunnelSetpoint = ProtoConstants.kElevatorFunnelSetpoint;
-      kElevatorL1LoadSetpoint = ProtoConstants.kElevatorL1LoadSetpoint;
-      kElevatorStowSetpoint = ProtoConstants.kElevatorStowSetpoint;
-      talonFXSConfig = ProtoConstants.getFXSConfig();
-      algaeMotionConfig = ProtoConstants.getAlgaeMotionConfig();
-      algaeRemovalMotionConfig = algaeMotionConfig;
-      noAlgaeMotionConfig = ProtoConstants.getNoAlgaeMotionConfig();
-      kTicksPerRot = 160;
-      logger.info("Using Proto Constants");
+    // Proto constants
+    kElevatorFunnelSetpoint = ProtoConstants.kElevatorFunnelSetpoint;
+    kElevatorL1LoadSetpoint = ProtoConstants.kElevatorL1LoadSetpoint;
+    kElevatorStowSetpoint = ProtoConstants.kElevatorStowSetpoint;
+    talonFXSConfig = ProtoConstants.getFXSConfig();
+    algaeMotionConfig = ProtoConstants.getAlgaeMotionConfig();
+    algaeRemovalMotionConfig = algaeMotionConfig;
+    noAlgaeMotionConfig = ProtoConstants.getNoAlgaeMotionConfig();
+    kTicksPerRot = 160;
+    logger.info("Using Proto Constants");
 
-      // Biscuit
+    // Biscuit
 
-      kBiscuitZero = ProtoConstants.kZero;
-      kSafeToStowUpper = ProtoConstants.kSafeToStowUpper;
-      kSafeToStowLower = ProtoConstants.kSafeToStowLower;
+    kBiscuitZero = ProtoConstants.kZero;
+    kSafeToStowUpper = ProtoConstants.kSafeToStowUpper;
+    kSafeToStowLower = ProtoConstants.kSafeToStowLower;
 
-      // Setpoints
-      // Idle
-      kStowSetpoint = ProtoConstants.kBiscuitStowSetpoint;
-      kFunnelSetpoint = ProtoConstants.kFunnelSetpoint;
-      kL1CoralLoadSetpoint = ProtoConstants.kL1CoralLoadSetpoint;
-      kPrestageSetpoint = ProtoConstants.kPrestageSetpoint;
-      kPrestageAlgaeSetpoint = ProtoConstants.kPrestageAlgaeSetpoint;
+    // Setpoints
+    // Idle
+    kStowSetpoint = ProtoConstants.kBiscuitStowSetpoint;
+    kFunnelSetpoint = ProtoConstants.kFunnelSetpoint;
+    kL1CoralLoadSetpoint = ProtoConstants.kL1CoralLoadSetpoint;
+    kPrestageSetpoint = ProtoConstants.kPrestageSetpoint;
+    kPrestageAlgaeSetpoint = ProtoConstants.kPrestageAlgaeSetpoint;
 
-      // Algae removal
-      kL2AlgaeSetpoint = ProtoConstants.kL2AlgaeSetpoint;
-      kL3AlgaeSetpoint = ProtoConstants.kL3AlgaeSetpoint;
+    // Algae removal
+    kL2AlgaeSetpoint = ProtoConstants.kL2AlgaeSetpoint;
+    kL3AlgaeSetpoint = ProtoConstants.kL3AlgaeSetpoint;
 
-      kL2AlgaeRemovalSetpoint = ProtoConstants.kL2AlgaeRemovalSetpoint;
-      kL3AlgaeRemovalSetpoint = ProtoConstants.kL3AlgaeRemovalSetpoint;
+    kL2AlgaeRemovalSetpoint = ProtoConstants.kL2AlgaeRemovalSetpoint;
+    kL3AlgaeRemovalSetpoint = ProtoConstants.kL3AlgaeRemovalSetpoint;
 
-      // Coral score
-      kL1CoralSetpoint = ProtoConstants.kL1CoralSetpoint;
-      kL2CoralSetpoint = ProtoConstants.kL2CoralSetpoint;
-      kL3CoralSetpoint = ProtoConstants.kL3CoralSetpoint;
-      kL4CoralSetpoint = ProtoConstants.kL4CoralSetpoint;
+    // Coral score
+    kL1CoralSetpoint = ProtoConstants.kL1CoralSetpoint;
+    kL2CoralSetpoint = ProtoConstants.kL2CoralSetpoint;
+    kL3CoralSetpoint = ProtoConstants.kL3CoralSetpoint;
+    kL4CoralSetpoint = ProtoConstants.kL4CoralSetpoint;
 
-      // Algae obtaining
-      kFloorAlgaeSetpoint = ProtoConstants.kFloorAlgaeSetpoint;
-      kMicAlgaeSetpoint = ProtoConstants.kMicAlgaeSetpoint;
-      kHpAlgaeSetpoint = ProtoConstants.kHpAlgaeSetpoint;
+    // Algae obtaining
+    kFloorAlgaeSetpoint = ProtoConstants.kFloorAlgaeSetpoint;
+    kMicAlgaeSetpoint = ProtoConstants.kMicAlgaeSetpoint;
+    kHpAlgaeSetpoint = ProtoConstants.kHpAlgaeSetpoint;
 
-      // Algae scoring
-      kProcessorSetpoint = ProtoConstants.kProcessorSetpoint;
-      kBargeSetpoint = ProtoConstants.kBargeSetpoint;
-      // kBargeBackwardSetpoint = ProtoConstants.kBargeBackwardSetpoint;
+    // Algae scoring
+    kProcessorSetpoint = ProtoConstants.kProcessorSetpoint;
+    kBargeSetpoint = ProtoConstants.kBargeSetpoint;
+    // kBargeBackwardSetpoint = ProtoConstants.kBargeBackwardSetpoint;
 
-      kTagAlignThreshold = ProtoConstants.kTagAlignThreshold;
+    kTagAlignThreshold = ProtoConstants.kTagAlignThreshold;
   }
 
   public static class ProtoConstants {

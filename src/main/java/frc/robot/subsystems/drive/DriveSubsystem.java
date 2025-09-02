@@ -11,10 +11,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.constants.DriveConstants;
-import frc.robot.subsystems.robotState.RobotStateSubsystem;
+// import frc.robot.subsystems.robotState.RobotStateSubsystem;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
 import net.jafama.FastMath;
@@ -46,7 +45,7 @@ public class DriveSubsystem extends MeasurableSubsystem {
 
   private boolean ignoreSticks = false;
 
-  private RobotStateSubsystem robotStateSubsystem;
+  // private RobotStateSubsystem robotStateSubsystem;
 
   public DriveSubsystem(SwerveIO io) {
     this.io = io;
@@ -233,16 +232,16 @@ public class DriveSubsystem extends MeasurableSubsystem {
         Rotation2d.fromDegrees(90));
   }
 
-  public void teleResetGyro() {
-    setAutoDebugMsg("Reset Gyro");
-    logger.info("Driver Joystick: Reset Gyro");
-    double gyroResetDegs = robotStateSubsystem.getAllianceColor() == Alliance.Blue ? 0.0 : 180.0;
-    io.setBothGyroOffset(Rotation2d.fromDegrees(gyroResetDegs));
-    Logger.recordOutput("DriveSubsystem/gyroOffset", Rotation2d.fromDegrees(gyroResetDegs));
-    io.resetGyro();
-    io.resetOdometry(
-        new Pose2d(inputs.poseMeters.getTranslation(), Rotation2d.fromDegrees(gyroResetDegs)));
-  }
+  // public void teleResetGyro() {
+  //   setAutoDebugMsg("Reset Gyro");
+  //   logger.info("Driver Joystick: Reset Gyro");
+  //   double gyroResetDegs = robotStateSubsystem.getAllianceColor() == Alliance.Blue ? 0.0 : 180.0;
+  //   io.setBothGyroOffset(Rotation2d.fromDegrees(gyroResetDegs));
+  //   Logger.recordOutput("DriveSubsystem/gyroOffset", Rotation2d.fromDegrees(gyroResetDegs));
+  //   io.resetGyro();
+  //   io.resetOdometry(
+  //       new Pose2d(inputs.poseMeters.getTranslation(), Rotation2d.fromDegrees(gyroResetDegs)));
+  // }
 
   // Make whether a trajectory is currently active obvious on grapher
   public void grapherTrajectoryActive(boolean active) {
@@ -252,7 +251,7 @@ public class DriveSubsystem extends MeasurableSubsystem {
 
   // Field flipping stuff
   public boolean shouldFlip() {
-    return robotStateSubsystem.getAllianceColor() == Alliance.Red;
+    return true; // robotStateSubsystem.getAllianceColor() == Alliance.Red;
   }
 
   public Translation2d apply(Translation2d translation) {

@@ -11,15 +11,12 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.*;
 import edu.wpi.first.util.CircularBuffer;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.constants.VisionConstants;
-//import frc.robot.subsystems.drive.DriveSubsystem;
-import java.io.IOException;
+import frc.robot.subsystems.turret.TurretSubsystemIOFX;
 import java.util.ArrayList;
 import java.util.Set;
 import net.jafama.FastMath;
@@ -28,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import org.strykeforce.telemetry.TelemetryService;
 import org.strykeforce.telemetry.measurable.MeasurableSubsystem;
 import org.strykeforce.telemetry.measurable.Measure;
-import frc.robot.subsystems.turret.TurretSubsystem;
 
 public class VisionSubsystem extends MeasurableSubsystem {
 
@@ -43,9 +39,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
   };
 
   private double[] camHeights = {
-    camPositions[0].getZ(),
-    camPositions[1].getZ(),
-    camPositions[2].getZ(),
+    camPositions[0].getZ(), camPositions[1].getZ(), camPositions[2].getZ(),
   };
 
   // Array of camera rotations
@@ -57,14 +51,12 @@ public class VisionSubsystem extends MeasurableSubsystem {
 
   // Array of camera names
   private String[] camNames = {
-    VisionConstants.kCam1Name,
-    VisionConstants.kCam2Name,
-    VisionConstants.kCam3Name,
+    VisionConstants.kCam1Name, VisionConstants.kCam2Name, VisionConstants.kCam3Name,
   };
 
   private int trustedCameraYawIdx = -1;
 
-  //private DriveSubsystem driveSubsystem;
+  // private DriveSubsystem driveSubsystem;
   /*Because we use two seperate loggers we can import one and then define the
   other here.*/
   private org.slf4j.Logger textLogger;
@@ -81,14 +73,14 @@ public class VisionSubsystem extends MeasurableSubsystem {
   private WallEyeTagResult[] lastResult = new WallEyeTagResult[VisionConstants.kNumCams];
   private Matrix<N3, N1> adativeMatrix;
   private Matrix<N3, N1> stdMatrix;
-  private TurretSubsystem turretSubsystem;
+  private TurretSubsystemIOFX turretSubsystem;
   private boolean[] acceptUpdates = new boolean[VisionConstants.kNumCams];
   private boolean ignoreRearCams = false;
   private boolean isAuto = false;
 
-  public VisionSubsystem(TurretSubsystem turretSubsystem) {
+  public VisionSubsystem(TurretSubsystemIOFX turretSubsystem) {
     this.turretSubsystem = turretSubsystem;
-    //this.driveSubsystem = driveSubsystem;
+    // this.driveSubsystem = driveSubsystem;
     textLogger = LoggerFactory.getLogger("Vision");
 
     cams = new WallEyeCam[VisionConstants.kNumCams];
@@ -98,7 +90,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
     // We then copy the adaptive matrix because they will differ later
     stdMatrix = adaptiveMatrix.copy();
     // I'm not sure why we put this in a try catch maybe could be removed
-      field = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+    field = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
     // Fill our camera array
     for (int i = 0; i < VisionConstants.kNumCams; i++) {
       cams[i] = new WallEyeCam(camNames[i], -1);
@@ -384,7 +376,8 @@ public class VisionSubsystem extends MeasurableSubsystem {
   @Override
   public void periodic() {
     Logger.recordOutput("Vision/Vision Updates On", visionUpdating);
-    double gyroData = FastMath.normalizeMinusPiPi(turretSubsystem.getGyroRotation2d().getRadians());
+    double gyroData = 0.0;
+    // FastMath.normalizeMinusPiPi(turretSubsystem.getGyroRotation2d().getRadians());
     gyroBuffer.addFirst(gyroData);
 
     Logger.recordOutput("Vision/Gyro Buffer", gyroData);
@@ -487,8 +480,8 @@ public class VisionSubsystem extends MeasurableSubsystem {
               stdMatrix.set(2, 0, VisionConstants.kTrustYawStdDev);
             }
 
-            robotState.addVisionMeasurement(
-                robotPose, result.getTimeStamp() / 1_000_000.0, stdMatrix);
+            // robotState.addVisionMeasurement(
+            //     robotPose, result.getTimeStamp() / 1_000_000.0, stdMatrix);
             stdMatrix.set(2, 0, VisionConstants.kIgnoreYawStdDev);
           }
         } else {
