@@ -17,14 +17,28 @@ import com.ctre.phoenix6.signals.ReverseLimitTypeValue;
 import edu.wpi.first.units.measure.Angle;
 
 public class TurretConstants {
-
-  public static final Angle leftTurretLimit = null;
-  public static final Angle rightTurretLimit = null;
+  // TODO Add real constants
+  public static final Angle kLeftTurretLimit = null;
+  public static final Angle kRightTurretLimit = null;
+  public static final double kTurretCloseEnough = 0;
 
   public static final int kTurretFx = 0;
+  public static final int kCanCoder1Id = 1;
+  public static final int kCanCoder2Id = 2;
+  public static final double kCanCoder1Gr = 20 / 150;
+  public static final double kCanCoder2Gr = 19 / 150;
+  public static final double kBigGr = 1 / 100;
+
+  public static final double kCanCoder1Zero = 0;
+  public static final double kCanCoder2Zero = 0;
 
   public static final double kFxForwardMax = 0;
   public static final double kFxReverseMax = 0;
+  // List of gear rations gr, 2gr, 3gr and so on
+  public static final double[] kCanCoder1PosRot = {};
+  public static final double[] kCanCoder2PosRot = {};
+
+  public static final double kZeroDifferenceTol = 100;
 
   public static TalonFXConfiguration turretFXConfig() {
     TalonFXConfiguration fxConfig = new TalonFXConfiguration();
