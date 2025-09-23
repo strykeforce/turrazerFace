@@ -27,7 +27,7 @@ public class TurretSubsystemIOFX implements TurretSubsystemIO {
       new MotionMagicVoltage(0).withEnableFOC(false).withSlot(0);
 
   public TurretSubsystemIOFX() {
-    talonFX = new TalonFX(TurretConstants.kTurretFx);
+    talonFX = new TalonFX(TurretConstants.kTurretFxId);
     talonConfigurator = talonFX.getConfigurator();
     talonConfigurator.apply(TurretConstants.turretFXConfig());
     canCoder1 = new CANcoder(TurretConstants.kCanCoder1Id);

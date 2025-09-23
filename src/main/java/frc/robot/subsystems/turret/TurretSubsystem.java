@@ -24,6 +24,7 @@ public class TurretSubsystem extends MeasurableSubsystem {
   public void setPosition(Angle setPos) {
     setPoint = setPos;
     io.setPosition(setPoint);
+    
   }
 
   public Angle getPosition() {
@@ -31,7 +32,7 @@ public class TurretSubsystem extends MeasurableSubsystem {
   }
 
   private boolean withInTolerence(double pos1, double pos2) {
-    return (pos1 - pos2) < TurretConstants.kZeroDifferenceTol;
+    return Math.abs(pos1 - pos2) < TurretConstants.kZeroDifferenceTol;
   }
 
   public double zero() {
@@ -66,6 +67,9 @@ public class TurretSubsystem extends MeasurableSubsystem {
 
   @Override
   public Set<Measure> getMeasures() {
-    return null;
+    return Set.of(
+      new Measure("Turret Finished?", () -> isFinished() ? 1 : 0),
+      new Measure("Turret Setpoint", () -> setPoint.in(Rotations)),
+      new Measure("Turret Zero Point", () -> zero()));
   }
 }

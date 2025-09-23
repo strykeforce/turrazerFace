@@ -22,9 +22,9 @@ public class TurretConstants {
   public static final Angle kRightTurretLimit = null;
   public static final double kTurretCloseEnough = 0;
 
-  public static final int kTurretFx = 0;
-  public static final int kCanCoder1Id = 1;
-  public static final int kCanCoder2Id = 2;
+  public static final int kTurretFxId = 0;
+  public static final int kCanCoder1Id = 21;
+  public static final int kCanCoder2Id = 22;
   public static final double kCanCoder1Gr = 20 / 150;
   public static final double kCanCoder2Gr = 19 / 150;
   public static final double kBigGr = 1 / 100;

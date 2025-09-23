@@ -16,7 +16,7 @@ import edu.wpi.first.math.numbers.*;
 import edu.wpi.first.util.CircularBuffer;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.constants.VisionConstants;
-import frc.robot.subsystems.turret.TurretSubsystemIOFX;
+import frc.robot.subsystems.turret.TurretSubsystem;
 import java.util.ArrayList;
 import java.util.Set;
 import net.jafama.FastMath;
@@ -25,6 +25,9 @@ import org.slf4j.LoggerFactory;
 import org.strykeforce.telemetry.TelemetryService;
 import org.strykeforce.telemetry.measurable.MeasurableSubsystem;
 import org.strykeforce.telemetry.measurable.Measure;
+import frc.robot.subsystems.drive.DriveSubsystem;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.geometry.Translation2d;
 
 public class VisionSubsystem extends MeasurableSubsystem {
 
@@ -66,6 +69,8 @@ public class VisionSubsystem extends MeasurableSubsystem {
   private int minTags;
   private CircularBuffer<Double> gyroBuffer =
       new CircularBuffer<Double>(VisionConstants.kCircularBufferSize);
+  private CircularBuffer<Double> turretBuffer = 
+      new CircularBuffer<Double>(VisionConstants.kCircularBufferSize);
   private double timeSinceLastUpdate;
   private int updatesToWheels;
   private Matrix adaptiveMatrix;
@@ -73,14 +78,15 @@ public class VisionSubsystem extends MeasurableSubsystem {
   private WallEyeTagResult[] lastResult = new WallEyeTagResult[VisionConstants.kNumCams];
   private Matrix<N3, N1> adativeMatrix;
   private Matrix<N3, N1> stdMatrix;
-  private TurretSubsystemIOFX turretSubsystem;
+  private TurretSubsystem turretSubsystem;
   private boolean[] acceptUpdates = new boolean[VisionConstants.kNumCams];
   private boolean ignoreRearCams = false;
   private boolean isAuto = false;
+  private DriveSubsystem driveSubsystem;
 
-  public VisionSubsystem(TurretSubsystemIOFX turretSubsystem) {
+  public VisionSubsystem(TurretSubsystem turretSubsystem) {
     this.turretSubsystem = turretSubsystem;
-    // this.driveSubsystem = driveSubsystem;
+    this.driveSubsystem = driveSubsystem;
     textLogger = LoggerFactory.getLogger("Vision");
 
     cams = new WallEyeCam[VisionConstants.kNumCams];
@@ -192,7 +198,6 @@ public class VisionSubsystem extends MeasurableSubsystem {
   }
 
   // Filters
-  /* Commented until a Drive Subsystem
   private boolean camsAgreeWithWheels(Translation3d pose, WallEyeTagResult result) {
 
     ChassisSpeeds vel = driveSubsystem.getFieldRelSpeed();
@@ -204,16 +209,12 @@ public class VisionSubsystem extends MeasurableSubsystem {
         Math.sqrt(FastMath.pow2(vel.vxMetersPerSecond) + FastMath.pow2(vel.vyMetersPerSecond));
 
     double dispMagnitude = Math.sqrt(FastMath.pow2(disp.getX()) + FastMath.pow2(disp.getY()));
-
-    /*This gets our displacement and compares it to who much we could
-    have moved.It does this by getting the velocity and plotting it on a
-    graph. The graph will be in the docs.
     return result.getNumTags() >= minTags
         && dispMagnitude
             <= (velMagnitude * VisionConstants.kLinearCoeffOnVelFilter
                 + VisionConstants.kOffsetOnVelFilter
                 + FastMath.pow2(velMagnitude * VisionConstants.kSquaredCoeffOnVelFilter));
-  }*/
+  }
 
   private boolean camsWithinField(Translation3d pose, WallEyePoseResult result) {
     return (result.getNumTags() >= 2 || result.getAmbiguity() < VisionConstants.kMaxAmbig)
@@ -362,6 +363,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
     }
 
     // See what pose is closer the the gyro at the time of the photo's capture.
+    //TODO If Birds nest camera then user turret plus gyro buffer. Else use gyro buffer.
     double rotation =
         gyroBuffer.get(
             FastMath.floorToInt(
@@ -376,9 +378,10 @@ public class VisionSubsystem extends MeasurableSubsystem {
   @Override
   public void periodic() {
     Logger.recordOutput("Vision/Vision Updates On", visionUpdating);
-    double gyroData = 0.0;
-    // FastMath.normalizeMinusPiPi(turretSubsystem.getGyroRotation2d().getRadians());
+    double gyroData = FastMath.normalizeMinusPiPi(driveSubsystem.getGyroRotation2d().getRadians());
     gyroBuffer.addFirst(gyroData);
+    double turretData = FastMath.normalizeMinusPiPi(turretSubsystem.getPosition().in(Radians));
+    turretBuffer.addFirst(turretData);
 
     Logger.recordOutput("Vision/Gyro Buffer", gyroData);
 
