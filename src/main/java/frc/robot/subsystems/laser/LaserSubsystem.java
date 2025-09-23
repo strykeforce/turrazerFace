@@ -6,7 +6,7 @@ public class LaserSubsystem {
   public LaserSubsystem() {}
 
   public Rotation2d getLaserPos() {
-    //TODO See whiteboard
+    // TODO See whiteboard
     return null;
   }
 }

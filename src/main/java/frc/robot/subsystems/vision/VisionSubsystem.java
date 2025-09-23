@@ -11,11 +11,14 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.*;
 import edu.wpi.first.util.CircularBuffer;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.constants.VisionConstants;
+import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.turret.TurretSubsystem;
 import java.util.ArrayList;
 import java.util.Set;
@@ -25,9 +28,6 @@ import org.slf4j.LoggerFactory;
 import org.strykeforce.telemetry.TelemetryService;
 import org.strykeforce.telemetry.measurable.MeasurableSubsystem;
 import org.strykeforce.telemetry.measurable.Measure;
-import frc.robot.subsystems.drive.DriveSubsystem;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.geometry.Translation2d;
 
 public class VisionSubsystem extends MeasurableSubsystem {
 
@@ -69,7 +69,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
   private int minTags;
   private CircularBuffer<Double> gyroBuffer =
       new CircularBuffer<Double>(VisionConstants.kCircularBufferSize);
-  private CircularBuffer<Double> turretBuffer = 
+  private CircularBuffer<Double> turretBuffer =
       new CircularBuffer<Double>(VisionConstants.kCircularBufferSize);
   private double timeSinceLastUpdate;
   private int updatesToWheels;
@@ -363,7 +363,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
     }
 
     // See what pose is closer the the gyro at the time of the photo's capture.
-    //TODO If Birds nest camera then user turret plus gyro buffer. Else use gyro buffer.
+    // TODO If Birds nest camera then user turret plus gyro buffer. Else use gyro buffer.
     double rotation =
         gyroBuffer.get(
             FastMath.floorToInt(
