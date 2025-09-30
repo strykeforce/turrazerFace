@@ -6,6 +6,7 @@ import edu.wpi.first.units.measure.Angle;
 import frc.robot.constants.TurretConstants;
 import java.util.ArrayList;
 import java.util.Set;
+import net.jafama.FastMath;
 import org.strykeforce.telemetry.measurable.MeasurableSubsystem;
 import org.strykeforce.telemetry.measurable.Measure;
 
@@ -38,13 +39,13 @@ public class TurretSubsystem extends MeasurableSubsystem {
 
     for (int i = 0; i < 8; i++) {
       possiblePos1.add(
-          ((inputs.canCoder1Pos.abs(Rotations) - TurretConstants.kCanCoder1Zero))
+          (FastMath.abs(inputs.canCoder1Pos.in(Rotations) - TurretConstants.kCanCoder1Zero))
                   * TurretConstants.kCanCoder1Gr
               + TurretConstants.kCanCoder1PosRot[i]);
     }
     for (int i = 0; i < 8; i++) {
       possiblePos1.add(
-          (inputs.canCoder2Pos.abs(Rotations) - TurretConstants.kCanCoder2Zero)
+          FastMath.abs(inputs.canCoder2Pos.in(Rotations) - TurretConstants.kCanCoder2Zero)
                   * TurretConstants.kCanCoder2Gr
               + TurretConstants.kCanCoder2PosRot[i]);
     }

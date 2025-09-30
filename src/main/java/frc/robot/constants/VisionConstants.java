@@ -67,13 +67,13 @@ public final class VisionConstants {
   public static final double kCamErrorZThreshold = 0.3;
 
   // Constants for cameras
-  public static final int kNumCams = 5;
+  public static final int kNumCams = 3;
   public static final int kNumPis = 3;
   public static final int[] kUdpIndex = {0, 1, 2};
 
   // Camera Ports
   public static final int[] kCamPorts = {5802, 5804, 5803, 5804, 5804};
-
+  // TODO Update Vision Constants
   // Names
   public static final String kCam1Name = "Left Servo";
   public static final String kCam2Name = "Rear Right"; // when looking out the back
@@ -86,11 +86,9 @@ public final class VisionConstants {
   //   public static final String kPi3Name = "Rear";
 
   // Indexs
-  //   public static final int kCam1Idx = 0;
-  //   public static final int kCam2Idx = 0;
-  //   public static final int kCam3Idx = 0;
-  //   public static final int kCam4Idx = 0;
-  //   public static final int kCam5Idx = 2;
+  public static final int kCam1Idx = 0;
+  public static final int kCam2Idx = 0;
+  public static final int kCam3Idx = 0;
 
   public static final double kLoopTime = 0.02;
   public static final int kCircularBufferSize = 1000;

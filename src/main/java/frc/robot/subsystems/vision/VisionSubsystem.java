@@ -363,16 +363,32 @@ public class VisionSubsystem extends MeasurableSubsystem {
     }
 
     // See what pose is closer the the gyro at the time of the photo's capture.
-    // TODO If Birds nest camera then user turret plus gyro buffer. Else use gyro buffer.
-    double rotation =
-        gyroBuffer.get(
-            FastMath.floorToInt(
-                (((RobotController.getFPGATime() - time) / 1_000_000.0)
-                    / VisionConstants.kLoopTime)));
-    Logger.recordOutput(
-        "Vision/Gyro Queried Loop Count",
-        FastMath.floorToInt(((time / 1_000_000.0) / VisionConstants.kLoopTime)));
-    return getCloserPose(pose1, pose2, rotation, camIndex);
+    if (camIndex == 1) {
+      double rotation =
+          (gyroBuffer.get(
+                  FastMath.floorToInt(
+                      (((RobotController.getFPGATime() - time) / 1_000_000.0)
+                          / VisionConstants.kLoopTime))))
+              + turretBuffer.get(
+                  FastMath.floorToInt(
+                      (((RobotController.getFPGATime() - time) / 1_000_000.0)
+                          / VisionConstants.kLoopTime)));
+      Logger.recordOutput(
+          "Vision/Gyro Queried Loop Count",
+          FastMath.floorToInt(((time / 1_000_000.0) / VisionConstants.kLoopTime)));
+      return getCloserPose(pose1, pose2, rotation, camIndex);
+
+    } else {
+      double rotation =
+          gyroBuffer.get(
+              FastMath.floorToInt(
+                  (((RobotController.getFPGATime() - time) / 1_000_000.0)
+                      / VisionConstants.kLoopTime)));
+      Logger.recordOutput(
+          "Vision/Gyro Queried Loop Count",
+          FastMath.floorToInt(((time / 1_000_000.0) / VisionConstants.kLoopTime)));
+      return getCloserPose(pose1, pose2, rotation, camIndex);
+    }
   }
 
   @Override
