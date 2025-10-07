@@ -12,6 +12,8 @@ public class LaserSubsystem extends MeasurableSubsystem {
   private LaserSubsystemIO io;
   private LaserIOInputsAutoLogged inputs = new LaserIOInputsAutoLogged();
   private Angle setPoint;
+  private LaserStates curState;
+  private int zeroCounter = 0;
 
   public LaserSubsystem() {
     this.io = io;
@@ -29,7 +31,7 @@ public class LaserSubsystem extends MeasurableSubsystem {
   public void zero() {
     // TODO Add kraken encoder and make zero function
   }
-
+  // TODO Find whats up with these functions not needing @Overide
   public boolean isFinished() {
     return Math.abs(getLaserPos().minus(setPoint).in(Rotations)) < LaserConstants.kLaserCloseEnough;
   }
@@ -39,5 +41,31 @@ public class LaserSubsystem extends MeasurableSubsystem {
     return Set.of(
         new Measure("Turret Finished?", () -> isFinished() ? 1 : 0),
         new Measure("Turret Setpoint", () -> setPoint.in(Rotations)));
+  }
+
+  public void perodic() {
+    io.updateInputs(inputs);
+
+    switch (curState) {
+      case ZEROING:
+        if (Math.abs(inputs.velocity) < LaserConstants.kLaserCloseEnough) {
+          zeroCounter++;
+          if (zeroCounter <= LaserConstants.kZeroCounter) {
+            io.zero();
+            zeroCounter = 0;
+            io.setLimitConfig(LaserConstants.laserFXConfig().CurrentLimits);
+            setPosition(Rotations.of(0));
+          }
+        }
+        break;
+
+      case ZEROED:
+        break;
+    }
+  }
+
+  public enum LaserStates {
+    ZEROING,
+    ZEROED
   }
 }

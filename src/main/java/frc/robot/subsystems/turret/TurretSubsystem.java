@@ -65,6 +65,10 @@ public class TurretSubsystem extends MeasurableSubsystem {
         < TurretConstants.kTurretCloseEnough;
   }
 
+  public void perodic() {
+    io.updateInputs(inputs);
+  }
+
   @Override
   public Set<Measure> getMeasures() {
     return Set.of(

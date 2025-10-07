@@ -25,9 +25,10 @@ public class LaserConstants {
   public static final double kLaserGr = 20 / 150;
   public static final double kFxForwardMax = 0;
   public static final double kFxReverseMax = 0;
-
+  public static final double kZeroedThreshhold = 0.025;
+  public static final int kZeroCounter = 2;
   // TODO Update Talon Constants
-  public static TalonFXConfiguration turretFXConfig() {
+  public static TalonFXConfiguration laserFXConfig() {
     TalonFXConfiguration fxConfig = new TalonFXConfiguration();
 
     CurrentLimitsConfigs current =
@@ -85,5 +86,17 @@ public class LaserConstants {
             .withInverted(InvertedValue.CounterClockwise_Positive);
     fxConfig.MotorOutput = motorOut;
     return fxConfig;
+  }
+
+  public static CurrentLimitsConfigs getZeroingCurrentLimitsConfigs() {
+    CurrentLimitsConfigs current =
+        new CurrentLimitsConfigs()
+            .withStatorCurrentLimitEnable(false)
+            .withStatorCurrentLimit(20)
+            .withSupplyCurrentLimit(10)
+            .withSupplyCurrentLowerLimit(8)
+            .withSupplyCurrentLowerTime(0.02)
+            .withSupplyCurrentLimitEnable(true);
+    return current;
   }
 }
