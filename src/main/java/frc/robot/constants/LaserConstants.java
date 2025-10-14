@@ -100,6 +100,7 @@ public class LaserConstants {
             .withSupplyCurrentLimitEnable(true);
     return current;
   }
+
   public static SoftwareLimitSwitchConfigs getZeroingSoftLimitConfigs() {
     SoftwareLimitSwitchConfigs swLimit =
         new SoftwareLimitSwitchConfigs()
@@ -109,4 +110,3 @@ public class LaserConstants {
     return swLimit;
   }
 }
-

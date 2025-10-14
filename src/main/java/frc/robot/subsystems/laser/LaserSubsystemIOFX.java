@@ -66,7 +66,8 @@ public class LaserSubsystemIOFX implements LaserSubsystemIO {
   public void setOpenLoopVelocity(double output) {
     talonFX.setControl(openLoopVelocity.withOutput(output));
   }
-  public void setSoftLimitConfig(SoftwareLimitSwitchConfigs config){
+
+  public void setSoftLimitConfig(SoftwareLimitSwitchConfigs config) {
     talonFXConfigurator.apply(config);
   }
 }
