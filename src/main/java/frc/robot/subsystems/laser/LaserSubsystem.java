@@ -1,7 +1,5 @@
 package frc.robot.subsystems.laser;
-
 import static edu.wpi.first.units.Units.Rotations;
-
 import edu.wpi.first.units.measure.Angle;
 import frc.robot.constants.LaserConstants;
 import java.util.Set;
@@ -15,7 +13,7 @@ public class LaserSubsystem extends MeasurableSubsystem {
   private LaserStates curState;
   private int zeroCounter = 0;
 
-  public LaserSubsystem() {
+  public LaserSubsystem(LaserSubsystemIO io) {
     this.io = io;
   }
 
@@ -29,11 +27,14 @@ public class LaserSubsystem extends MeasurableSubsystem {
   }
 
   public void zero() {
-    // TODO Add kraken encoder and make zero function
+    io.setOpenLoopVoltage(LaserConstants.kZeroingVolts);
+    io.setSoftLimitConfig(LaserConstants.getZeroingSoftLimitConfigs());
+    curState = LaserStates.ZEROING;
   }
   // TODO Find whats up with these functions not needing @Overide
   public boolean isFinished() {
-    return Math.abs(getLaserPos().minus(setPoint).in(Rotations)) < LaserConstants.kLaserCloseEnough;
+    return Math.abs(getLaserPos().minus(setPoint).in(Rotations)) < LaserConstants.kLaserCloseEnough &&
+    curState != LaserStates.ZEROING;
   }
 
   @Override
@@ -42,7 +43,6 @@ public class LaserSubsystem extends MeasurableSubsystem {
         new Measure("Turret Finished?", () -> isFinished() ? 1 : 0),
         new Measure("Turret Setpoint", () -> setPoint.in(Rotations)));
   }
-
   public void perodic() {
     io.updateInputs(inputs);
 

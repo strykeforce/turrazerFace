@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.Rotations;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -64,5 +65,8 @@ public class LaserSubsystemIOFX implements LaserSubsystemIO {
 
   public void setOpenLoopVelocity(double output) {
     talonFX.setControl(openLoopVelocity.withOutput(output));
+  }
+  public void setSoftLimitConfig(SoftwareLimitSwitchConfigs config){
+    talonFXConfigurator.apply(config);
   }
 }

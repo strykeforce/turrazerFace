@@ -27,6 +27,7 @@ public class LaserConstants {
   public static final double kFxReverseMax = 0;
   public static final double kZeroedThreshhold = 0.025;
   public static final int kZeroCounter = 2;
+  public static final int kZeroingVolts = 3;
   // TODO Update Talon Constants
   public static TalonFXConfiguration laserFXConfig() {
     TalonFXConfiguration fxConfig = new TalonFXConfiguration();
@@ -99,4 +100,13 @@ public class LaserConstants {
             .withSupplyCurrentLimitEnable(true);
     return current;
   }
+  public static SoftwareLimitSwitchConfigs getZeroingSoftLimitConfigs() {
+    SoftwareLimitSwitchConfigs swLimit =
+        new SoftwareLimitSwitchConfigs()
+            .withForwardSoftLimitEnable(false)
+            .withReverseSoftLimitEnable(false);
+
+    return swLimit;
+  }
 }
+

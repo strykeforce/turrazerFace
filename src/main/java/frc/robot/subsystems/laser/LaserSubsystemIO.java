@@ -1,6 +1,8 @@
 package frc.robot.subsystems.laser;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
+
 import edu.wpi.first.units.measure.Angle;
 import org.littletonrobotics.junction.AutoLog;
 import org.strykeforce.telemetry.TelemetryService;
@@ -26,4 +28,6 @@ public interface LaserSubsystemIO {
   public default void setOpenLoopVelocity(double output) {}
 
   public default void setLimitConfig(CurrentLimitsConfigs config) {}
+
+  public default void setSoftLimitConfig(SoftwareLimitSwitchConfigs config){}
 }

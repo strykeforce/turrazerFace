@@ -18,7 +18,7 @@ public class TurretSubsystem extends MeasurableSubsystem {
   private ArrayList<Double> possiblePos1 = new ArrayList<Double>();
   private ArrayList<Double> possiblePos2 = new ArrayList<Double>();
 
-  public TurretSubsystem() {
+  public TurretSubsystem(TurretSubsystemIO io) {
     this.io = io;
   }
 
