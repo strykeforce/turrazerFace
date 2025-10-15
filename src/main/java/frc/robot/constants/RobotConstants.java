@@ -88,6 +88,9 @@ public class RobotConstants {
   public static final int kMinAutoSwitchID = 4;
   public static final int kMaxAutoSwitchID = 9;
 
+  // TurrazerFace Constants
+  public static final double kAverageScoringTime = 0;
+
   public RobotConstants() {
     // Proto constants
     kElevatorFunnelSetpoint = ProtoConstants.kElevatorFunnelSetpoint;
