@@ -2,6 +2,7 @@ package frc.robot.subsystems.turret;
 
 import static edu.wpi.first.units.Units.Rotations;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.units.measure.Angle;
 import frc.robot.constants.TurretConstants;
 import java.util.ArrayList;
@@ -25,6 +26,10 @@ public class TurretSubsystem extends MeasurableSubsystem {
   public void setPosition(Angle setPos) {
     setPoint = setPos;
     io.setPosition(setPoint);
+  }
+
+  public void pointAtPos(Pose2d tarPos){
+    //Work on next look at getShooterAngleToSpeaker()
   }
 
   public Angle getPosition() {
