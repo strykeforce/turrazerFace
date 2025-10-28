@@ -15,7 +15,7 @@ public class TurretSubsystem extends MeasurableSubsystem {
 
   private TurretSubsystemIO io;
   private TurretIOInputsAutoLogged inputs = new TurretIOInputsAutoLogged();
-  private Angle setPoint;
+  private double setPoint;
   private ArrayList<Double> possiblePos1 = new ArrayList<Double>();
   private ArrayList<Double> possiblePos2 = new ArrayList<Double>();
 
@@ -23,17 +23,38 @@ public class TurretSubsystem extends MeasurableSubsystem {
     this.io = io;
   }
 
-  public void setPosition(Angle setPos) {
+  public void setPosition(double setPos) {
     setPoint = setPos;
-    io.setPosition(setPoint);
+    io.setPosition(checkForWrap(setPoint));
   }
 
-  public void pointAtPos(Pose2d tarPos){
-    //Work on next look at getShooterAngleToSpeaker()
+  public void pointAtPos(Pose2d tarPos, Pose2d drivePos){
+    /*1 Get x,y delta from our target to our robot with .minus 
+    returning a translation2d.
+    2 Get the angle from the translation2d.
+    3. Subtract our pose meters from drive.
+    */
+    double targetAngle = tarPos.minus(drivePos).getTranslation().getAngle()
+    .minus(drivePos.getRotation()).getMeasure().in(Rotations);
+    setPosition(targetAngle);
   }
 
-  public Angle getPosition() {
-    return Rotations.of(inputs.position);
+  public double getPosition() {
+    return inputs.position;
+  }
+  //Work on robot state. Do the cool stuff. I believe in you .
+  public double checkForWrap(double tarPos){
+    //Convert back to angle
+    tarPos = tarPos * TurretConstants.kMotorGr;
+    if (tarPos < TurretConstants.kWrap1){
+      return (360.0-tarPos) / TurretConstants.kMotorGr;
+    }
+    else if(tarPos > TurretConstants.kWrap2){
+      return (tarPos-360) / TurretConstants.kMotorGr;
+    }
+    else
+      return tarPos / TurretConstants.kMotorGr;
+      //Convert to rotations because I'm tired and didn't want to do anything differently.
   }
 
   private boolean withInTolerence(double pos1, double pos2) {
@@ -66,7 +87,7 @@ public class TurretSubsystem extends MeasurableSubsystem {
   }
 
   public boolean isFinished() {
-    return Math.abs(getPosition().minus(setPoint).in(Rotations))
+    return Math.abs(getPosition() - setPoint)
         < TurretConstants.kTurretCloseEnough;
   }
 
@@ -78,7 +99,7 @@ public class TurretSubsystem extends MeasurableSubsystem {
   public Set<Measure> getMeasures() {
     return Set.of(
         new Measure("Turret Finished?", () -> isFinished() ? 1 : 0),
-        new Measure("Turret Setpoint", () -> setPoint.in(Rotations)),
+        new Measure("Turret Setpoint", () -> setPoint),
         new Measure("Turret Zero Point", () -> zero()));
   }
 }

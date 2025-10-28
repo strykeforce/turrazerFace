@@ -18,5 +18,5 @@ public interface TurretSubsystemIO {
 
   public default void registerWith(TelemetryService telemetryService) {}
 
-  public default void setPosition(Angle setPos) {}
+  public default void setPosition(Double setPos) {}
 }

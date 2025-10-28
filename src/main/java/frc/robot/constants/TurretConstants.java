@@ -27,10 +27,16 @@ public class TurretConstants {
   public static final int kCanCoder2Id = 22;
   public static final double kCanCoder1Gr = 20 / 150;
   public static final double kCanCoder2Gr = 19 / 150;
-  public static final double kBigGr = 1 / 100;
+  public static final double kBigGr = 1 / 150;
+  public static final double kMotorGr = (38/150)*(1/30);
+
 
   public static final double kCanCoder1Zero = 0;
   public static final double kCanCoder2Zero = 0;
+
+  public static final double kWrap1 = -90 / kMotorGr;
+  public static final double kWrap2 = 360 / kMotorGr;
+  public static final double kWrapTooClose = 1;
 
   public static final double kFxForwardMax = 0;
   public static final double kFxReverseMax = 0;

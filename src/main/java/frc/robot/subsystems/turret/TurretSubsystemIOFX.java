@@ -19,8 +19,8 @@ public class TurretSubsystemIOFX implements TurretSubsystemIO {
   private CANcoder canCoder1; // left
   private CANcoder canCoder2; // right
 
-  StatusSignal<Angle> curPosition;
-  StatusSignal<AngularVelocity> curVelocity;
+  StatusSignal<Angle> curPositionSignal;
+  StatusSignal<AngularVelocity> curVelocitySignal;
 
   private MotionMagicVoltage positionMain =
       // Update MotionMagic constants
@@ -33,20 +33,22 @@ public class TurretSubsystemIOFX implements TurretSubsystemIO {
     canCoder1 = new CANcoder(TurretConstants.kCanCoder1Id);
     canCoder2 = new CANcoder(TurretConstants.kCanCoder2Id);
 
-    curPosition = talonFX.getPosition();
-    curVelocity = talonFX.getVelocity();
+    curPositionSignal = talonFX.getPosition();
+    curVelocitySignal = talonFX.getVelocity();
   }
 
   public void zeroTurret() {}
 
-  public void setPosition(Angle position) {
+  public void setPosition(Double position) {
     talonFX.setControl(positionMain.withPosition(position));
   }
 
   @Override
   public void updateInputs(TurretIOInputs inputs) {
     BaseStatusSignal.refreshAll(
-        curPosition, curVelocity, canCoder1.getPosition(), canCoder2.getPosition());
+        curPositionSignal, curVelocitySignal, canCoder1.getPosition(), canCoder2.getPosition());
+      inputs.position = curPositionSignal.getValueAsDouble();
+      inputs.velocity = curVelocitySignal.getValueAsDouble();
   }
 
   @Override

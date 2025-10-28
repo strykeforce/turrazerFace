@@ -17,6 +17,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.*;
 import edu.wpi.first.util.CircularBuffer;
 import edu.wpi.first.wpilibj.RobotController;
+import frc.robot.constants.TurretConstants;
 import frc.robot.constants.VisionConstants;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.turret.TurretSubsystem;
@@ -396,7 +397,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
     Logger.recordOutput("Vision/Vision Updates On", visionUpdating);
     double gyroData = FastMath.normalizeMinusPiPi(driveSubsystem.getGyroRotation2d().getRadians());
     gyroBuffer.addFirst(gyroData);
-    double turretData = FastMath.normalizeMinusPiPi(turretSubsystem.getPosition().in(Radians));
+    double turretData = FastMath.normalizeMinusPiPi(turretSubsystem.getPosition()/TurretConstants.kMotorGr);
     turretBuffer.addFirst(turretData);
 
     Logger.recordOutput("Vision/Gyro Buffer", gyroData);
