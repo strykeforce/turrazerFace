@@ -15,7 +15,21 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.ReverseLimitSourceValue;
 import com.ctre.phoenix6.signals.ReverseLimitTypeValue;
 import edu.wpi.first.units.measure.Angle;
-
+/* 
+ * kp 8.00
+ * kD 0.2
+ * kV 0.095
+ * Motion Magic
+ * A 300
+ * CV 120
+ * kA .1
+ * kV .12
+ * Current Limits
+ * scl 50
+ * supply 20
+ * 120 rot = 360
+ * 130 max speed
+*/
 public class TurretConstants {
   // TODO Add real constants
   public static final Angle kLeftTurretLimit = null;
