@@ -29,6 +29,7 @@ import edu.wpi.first.units.measure.Angle;
  * supply 20
  * 120 rot = 360
  * 130 max speed
+ * Cw positive
 */
 public class TurretConstants {
   // TODO Add real constants
