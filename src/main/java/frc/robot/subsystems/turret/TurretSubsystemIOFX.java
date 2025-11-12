@@ -47,8 +47,8 @@ public class TurretSubsystemIOFX implements TurretSubsystemIO {
   public void updateInputs(TurretIOInputs inputs) {
     BaseStatusSignal.refreshAll(
         curPositionSignal, curVelocitySignal, canCoder1.getPosition(), canCoder2.getPosition());
-      inputs.position = curPositionSignal.getValueAsDouble();
-      inputs.velocity = curVelocitySignal.getValueAsDouble();
+    inputs.position = curPositionSignal.getValueAsDouble();
+    inputs.velocity = curVelocitySignal.getValueAsDouble();
   }
 
   @Override

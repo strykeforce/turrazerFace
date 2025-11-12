@@ -45,8 +45,8 @@ public class LaserSubsystem extends MeasurableSubsystem {
         new Measure("Turret Finished?", () -> isFinished() ? 1 : 0),
         new Measure("Turret Setpoint", () -> setPoint.in(Rotations)));
   }
-
-  public void perodic() {
+@Override
+  public void periodic() {
     io.updateInputs(inputs);
 
     switch (curState) {

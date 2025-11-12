@@ -15,7 +15,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.ReverseLimitSourceValue;
 import com.ctre.phoenix6.signals.ReverseLimitTypeValue;
 import edu.wpi.first.units.measure.Angle;
-/* 
+
+/*
  * kp 8.00
  * kD 0.2
  * kV 0.095
@@ -31,7 +32,7 @@ import edu.wpi.first.units.measure.Angle;
  * 130 max speed
  * Cw positive
  * 2 cancoders CW positive
-*/
+ */
 public class TurretConstants {
   // TODO Add real constants
   public static final Angle kLeftTurretLimit = null;
@@ -44,8 +45,7 @@ public class TurretConstants {
   public static final double kCanCoder1Gr = 20 / 150;
   public static final double kCanCoder2Gr = 19 / 150;
   public static final double kBigGr = 1 / 150;
-  public static final double kMotorGr = (38/150)*(1/30);
-
+  public static final double kMotorGr = (38 / 150) * (1 / 30);
 
   public static final double kCanCoder1Zero = 0;
   public static final double kCanCoder2Zero = 0;
@@ -69,8 +69,8 @@ public class TurretConstants {
         new CurrentLimitsConfigs()
             .withStatorCurrentLimitEnable(false)
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(70)
-            .withSupplyCurrentLowerLimit(10)
+            .withSupplyCurrentLimit(50)
+            .withSupplyCurrentLowerLimit(50)
             .withSupplyCurrentLowerTime(2);
     fxConfig.CurrentLimits = current;
 
@@ -96,28 +96,28 @@ public class TurretConstants {
 
     Slot0Configs slot0 =
         new Slot0Configs()
-            .withKP(2)
+            .withKP(8)
             .withKI(0)
-            .withKD(0)
+            .withKD(0.2)
             .withGravityType(GravityTypeValue.Elevator_Static)
-            .withKG(0.36)
+            .withKG(0.0)
             .withKS(0)
-            .withKV(0.13)
+            .withKV(0.095)
             .withKA(0);
     fxConfig.Slot0 = slot0;
 
     MotionMagicConfigs motionMagic =
         new MotionMagicConfigs()
-            .withMotionMagicCruiseVelocity(70)
+            .withMotionMagicCruiseVelocity(120)
             .withMotionMagicAcceleration(300) // was 300
-            .withMotionMagicJerk(1500);
+            .withMotionMagicJerk(0);
     fxConfig.MotionMagic = motionMagic;
 
     MotorOutputConfigs motorOut =
         new MotorOutputConfigs()
             .withDutyCycleNeutralDeadband(0.01)
             .withNeutralMode(NeutralModeValue.Brake)
-            .withInverted(InvertedValue.CounterClockwise_Positive);
+            .withInverted(InvertedValue.Clockwise_Positive);
     fxConfig.MotorOutput = motorOut;
     return fxConfig;
   }

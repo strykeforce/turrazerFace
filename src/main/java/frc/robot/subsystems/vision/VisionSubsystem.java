@@ -60,7 +60,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
 
   private int trustedCameraYawIdx = -1;
 
-  // private DriveSubsystem driveSubsystem;
+
   /*Because we use two seperate loggers we can import one and then define the
   other here.*/
   private org.slf4j.Logger textLogger;
@@ -85,7 +85,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
   private boolean isAuto = false;
   private DriveSubsystem driveSubsystem;
 
-  public VisionSubsystem(TurretSubsystem turretSubsystem) {
+  public VisionSubsystem(TurretSubsystem turretSubsystem, DriveSubsystem driveSubsystem) {
     this.turretSubsystem = turretSubsystem;
     this.driveSubsystem = driveSubsystem;
     textLogger = LoggerFactory.getLogger("Vision");
@@ -397,7 +397,8 @@ public class VisionSubsystem extends MeasurableSubsystem {
     Logger.recordOutput("Vision/Vision Updates On", visionUpdating);
     double gyroData = FastMath.normalizeMinusPiPi(driveSubsystem.getGyroRotation2d().getRadians());
     gyroBuffer.addFirst(gyroData);
-    double turretData = FastMath.normalizeMinusPiPi(turretSubsystem.getPosition()/TurretConstants.kMotorGr);
+    double turretData =
+        FastMath.normalizeMinusPiPi(turretSubsystem.getPosition() / TurretConstants.kMotorGr);
     turretBuffer.addFirst(turretData);
 
     Logger.recordOutput("Vision/Gyro Buffer", gyroData);
