@@ -1,24 +1,25 @@
 package frc.robot.subsystems.RobotStateSubsystem;
 
-import org.strykeforce.telemetry.measurable.MeasurableSubsystem;
-
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.laser.LaserSubsystem;
 import frc.robot.subsystems.turret.TurretSubsystem;
 import java.util.Set;
+import org.strykeforce.telemetry.measurable.MeasurableSubsystem;
 import org.strykeforce.telemetry.measurable.Measure;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 
-public class RobotStateSubsystem extends MeasurableSubsystem{
+public class RobotStateSubsystem extends MeasurableSubsystem {
   private TurretSubsystem turretSubsystem;
   private LaserSubsystem laserSubsystem;
   private DriveSubsystem driveSubsystem;
   private Pose2d targetPos = new Pose2d();
   private AprilTagFieldLayout fieldLayout;
   private double timeOfFlight = 0.0;
+  private RobotStates curState;
   // Not Focusing on the rest of robot state right now just the main functions
   public RobotStateSubsystem(
       TurretSubsystem turretSubsystem,
@@ -35,8 +36,8 @@ public class RobotStateSubsystem extends MeasurableSubsystem{
     targetPos = newTarget;
   }
 
-//Testing Function
-  public void setTimeOfFlight(double seconds){
+  // Testing Function
+  public void setTimeOfFlight(double seconds) {
     timeOfFlight = seconds;
   }
 
@@ -44,13 +45,17 @@ public class RobotStateSubsystem extends MeasurableSubsystem{
     return targetPos;
   }
 
+  public void addVisionUpdate(){
+    
+  }
+
   private Translation2d getMotionCorrection() {
 
     double offsetX = driveSubsystem.getFieldRelSpeed().vxMetersPerSecond * getTimeOfFlight();
     double offsetY = driveSubsystem.getFieldRelSpeed().vyMetersPerSecond * getTimeOfFlight();
 
-    Translation2d offset = new Translation2d(offsetX, offsetY);
-    return getTargetPos().getTranslation().minus(offset);
+    Pose2d offset = new Pose2d(offsetX, offsetY,new Rotation2d());
+    return getTargetPos().minus(offset).getTranslation();
   }
 
   // Function here for show because its a laser. It moves at the speed of light.
@@ -58,8 +63,22 @@ public class RobotStateSubsystem extends MeasurableSubsystem{
     return timeOfFlight;
   }
 
-  public void periodic(){
-    turretSubsystem.pointAtPos(getTargetPos(),driveSubsystem.getPoseMeters());
+  public void periodic() {
+    switch (curState){
+      case NONE -> {
+        if (getTargetPos() != null){
+          break;
+        }
+      }
+      case TRACKING ->{
+        Pose2d targetPose = new Pose2d((getTargetPos().getTranslation()).minus(getMotionCorrection())
+    , new Rotation2d());
+    turretSubsystem.pointAtPos(targetPose, driveSubsystem.getPoseMeters());
+        if 
+      }
+        
+    }
+    
   }
 
   public enum RobotStates {
@@ -68,9 +87,8 @@ public class RobotStateSubsystem extends MeasurableSubsystem{
     SEEKING
   }
 
-@Override
-public Set<Measure> getMeasures() {
-  return Set.of();
+  @Override
+  public Set<Measure> getMeasures() {
+    return Set.of();
+  }
 }
-}
-

@@ -91,7 +91,8 @@ public class TurretSubsystem extends MeasurableSubsystem {
   public boolean isFinished() {
     return Math.abs(getPosition() - setPoint) < TurretConstants.kTurretCloseEnough;
   }
-@Override
+
+  @Override
   public void periodic() {
     io.updateInputs(inputs);
   }
