@@ -493,7 +493,7 @@ public class VisionSubsystem extends MeasurableSubsystem {
         if (camsWithinField(robotTranslation, result)) {
           // Is the pose in the field? If so, enjoy a updated position drive subsystem
           updatesToWheels++;
-          
+
           Logger.recordOutput("Vision/Accepted Cam " + camNames[idx], robotPose);
           // However we do have to be accepting the poses to use them
           if (visionUpdating) {

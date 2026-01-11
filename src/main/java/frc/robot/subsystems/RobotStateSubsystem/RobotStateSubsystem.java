@@ -45,16 +45,14 @@ public class RobotStateSubsystem extends MeasurableSubsystem {
     return targetPos;
   }
 
-  public void addVisionUpdate(){
-    
-  }
+  public void addVisionUpdate() {}
 
   private Translation2d getMotionCorrection() {
 
     double offsetX = driveSubsystem.getFieldRelSpeed().vxMetersPerSecond * getTimeOfFlight();
     double offsetY = driveSubsystem.getFieldRelSpeed().vyMetersPerSecond * getTimeOfFlight();
 
-    Pose2d offset = new Pose2d(offsetX, offsetY,new Rotation2d());
+    Pose2d offset = new Pose2d(offsetX, offsetY, new Rotation2d());
     return getTargetPos().minus(offset).getTranslation();
   }
 
@@ -64,21 +62,20 @@ public class RobotStateSubsystem extends MeasurableSubsystem {
   }
 
   public void periodic() {
-    switch (curState){
+    switch (curState) {
       case NONE -> {
-        if (getTargetPos() != null){
+        if (getTargetPos() != null) {
           break;
         }
       }
-      case TRACKING ->{
-        Pose2d targetPose = new Pose2d((getTargetPos().getTranslation()).minus(getMotionCorrection())
-    , new Rotation2d());
-    turretSubsystem.pointAtPos(targetPose, driveSubsystem.getPoseMeters());
-        if 
+      case TRACKING -> {
+        Pose2d targetPose =
+            new Pose2d(
+                (getTargetPos().getTranslation()).minus(getMotionCorrection()), new Rotation2d());
+        turretSubsystem.pointAtPos(targetPose, driveSubsystem.getPoseMeters());
+        //Didn't Get Finished
       }
-        
     }
-    
   }
 
   public enum RobotStates {
